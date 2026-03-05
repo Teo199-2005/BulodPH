@@ -67,11 +67,22 @@ final class BrevoMailService
      */
     public function sendOtp(string $to, string $code): bool
     {
+        $result = $this->sendOtpWithResult($to, $code);
+        return $result['success'];
+    }
+
+    /**
+     * Send OTP and return result with error message if failed (for API to report mail failures).
+     *
+     * @return array{success: bool, error: ?string}
+     */
+    public function sendOtpWithResult(string $to, string $code): array
+    {
         $subject = 'Your BulodPH verification code';
         $body = '<p style="margin:0 0 16px 0;color:#0f172a;">Your verification code is:</p>';
         $body .= '<p style="margin:8px 0 24px 0;font-size:28px;font-weight:700;letter-spacing:0.2em;color:#1e40af;">' . htmlspecialchars($code) . '</p>';
         $body .= '<p style="margin:0;font-size:14px;color:#475569;">This code expires in 10 minutes. If you didn\'t request it, you can ignore this email.</p>';
-        return $this->send($to, $subject, $body);
+        return $this->sendWithResult($to, $subject, $body);
     }
 
     /**

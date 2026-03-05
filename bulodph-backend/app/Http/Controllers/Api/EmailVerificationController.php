@@ -62,7 +62,14 @@ final class EmailVerificationController extends Controller
         Cache::put($sentKey, (string) time(), now()->addSeconds(self::RESEND_COOLDOWN_SECONDS));
 
         $mailer = app(BrevoMailService::class);
-        $mailer->sendOtp($user->email, $code);
+        $result = $mailer->sendOtpWithResult($user->email, $code);
+        if (!$result['success']) {
+            $error = $result['error'] ?? 'Mail could not be sent.';
+            return response()->json([
+                'message' => 'Could not send verification email. Check server mail configuration (MAIL_MAILER, Brevo SMTP).',
+                'error' => config('app.debug') ? $error : null,
+            ], 500);
+        }
 
         return response()->json(['message' => 'OTP sent']);
     }

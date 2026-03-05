@@ -10,11 +10,8 @@ export function useVehicles() {
     loading.value = true
     try {
       const data = await vehiclesApi.getVehicles({ approved: true, per_page: 100 })
-      if (data?.length) {
-        const byId = new Map(data.map(v => [v.id, v]))
-        const existingIds = new Set(byId.keys())
-        const kept = vehicles.value.filter(v => !existingIds.has(v.id))
-        vehicles.value = [...data, ...kept]
+      if (data) {
+        vehicles.value = data
       }
     } finally {
       loading.value = false

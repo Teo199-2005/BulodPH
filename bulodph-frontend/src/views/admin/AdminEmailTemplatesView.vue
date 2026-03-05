@@ -8,8 +8,8 @@
       </div>
       <v-divider class="dashboard-divider" />
       <v-card-text class="pa-4">
-        <p class="text-body-2 text-medium-emphasis mb-3">Send a test email to <strong>teofiloharry69@gmail.com</strong>. Gmail: enable 2-Step Verification, then create an <strong>App Password</strong> at <a href="https://myaccount.google.com/apppasswords" target="_blank" rel="noopener">myaccount.google.com/apppasswords</a> and set it as <code>MAIL_PASSWORD</code> in backend <code>.env</code>.</p>
-        <v-btn color="primary" rounded="lg" prepend-icon="mdi-email-send-outline" :loading="sendingTest" @click="sendTestEmail">
+        <p class="text-body-2 text-medium-emphasis mb-3">Send a test email to <strong>manolitosantos111@gmail.com</strong>. Ensure <code>MAIL_MAILER=smtp</code> and Brevo SMTP (or your provider) are set in backend <code>.env</code> — see <a href="https://myaccount.google.com/apppasswords" target="_blank" rel="noopener">App Password</a> for Gmail.</p>
+        <v-btn color="primary" rounded="lg" prepend-icon="mdi-email-send-outline" :loading="sendingTest" @click="sendTestEmail('manolitosantos111@gmail.com')">
           Send test email
         </v-btn>
       </v-card-text>
@@ -106,10 +106,11 @@ const templates = ref<EmailTemplate[]>([
   { id: 1, name: 'Welcome email', trigger: 'Registration', subject: 'Welcome to BulodPH!', lastEdited: '2026-02-20', status: 'Active' },
   { id: 2, name: 'Booking confirmation', trigger: 'Booking created', subject: 'Your booking is confirmed', lastEdited: '2026-02-18', status: 'Active' },
   { id: 3, name: 'Password reset', trigger: 'Forgot password', subject: 'Reset your password', lastEdited: '2026-02-15', status: 'Active' },
-  { id: 4, name: 'Booking reminder', trigger: '24h before pickup', subject: 'Reminder: your trip is tomorrow', lastEdited: '2026-02-10', status: 'Active' },
-  { id: 5, name: 'Review request', trigger: 'Trip completed', subject: 'How was your trip?', lastEdited: '2026-02-08', status: 'Active' },
-  { id: 6, name: 'Payout sent', trigger: 'Payout processed', subject: 'Your payout has been sent', lastEdited: '2026-02-05', status: 'Active' },
-  { id: 7, name: 'Account deactivation', trigger: 'Admin action', subject: 'Your account has been deactivated', lastEdited: '2026-01-28', status: 'Inactive' },
+  { id: 4, name: 'Email verification (OTP)', trigger: 'Email verification', subject: 'Your BulodPH verification code', lastEdited: '2026-03-05', status: 'Active' },
+  { id: 5, name: 'Booking reminder', trigger: '24h before pickup', subject: 'Reminder: your trip is tomorrow', lastEdited: '2026-02-10', status: 'Active' },
+  { id: 6, name: 'Review request', trigger: 'Trip completed', subject: 'How was your trip?', lastEdited: '2026-02-08', status: 'Active' },
+  { id: 7, name: 'Payout sent', trigger: 'Payout processed', subject: 'Your payout has been sent', lastEdited: '2026-02-05', status: 'Active' },
+  { id: 8, name: 'Account deactivation', trigger: 'Admin action', subject: 'Your account has been deactivated', lastEdited: '2026-01-28', status: 'Inactive' },
 ])
 
 const filteredTemplates = computed(() => templates.value)

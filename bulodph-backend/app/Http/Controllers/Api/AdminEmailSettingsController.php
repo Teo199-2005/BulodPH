@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 final class AdminEmailSettingsController extends Controller
 {
     /** Default recipient for admin test emails. */
-    private const TEST_EMAIL_TO = 'teofiloharry69@gmail.com';
+    private const TEST_EMAIL_TO = 'manolitosantos111@gmail.com';
 
     /**
      * Send a test email to verify Brevo is configured and delivering.

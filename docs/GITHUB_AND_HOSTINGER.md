@@ -143,6 +143,13 @@ The backend is reached but Laravel is throwing an exception. Do the following:
 
 ---
 
+**Vehicle images or link previews show localhost:8000**
+
+- In **public_html/bulodph-backend/.env** set **APP_URL=https://bulodph.com** (not `http://localhost:8000`). This affects any URLs the backend generates (e.g. rental logo uploads).
+- Vehicle main/side images are stored as relative paths (`/storage/vehicle-images/...`) so they work on any domain. Ensure **storage** is writable and, if needed, run **php artisan storage:link** (from `public_html/bulodph-backend`) so `/storage/*` is served from `storage/app/public`.
+
+---
+
 ## 3. Option: Build locally and upload (no Git on server)
 
 If you prefer not to use Hostinger GIT:

@@ -8,9 +8,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Vehicle;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 final class VehicleController extends Controller
 {
+    private const IMAGE_MAX_LENGTH = 1020;
+
     private function toResponse(Vehicle $v): array
     {
         return [
@@ -46,6 +50,33 @@ final class VehicleController extends Controller
         $data = $request->all();
         $user = $request->user();
         $isAdmin = $user && method_exists($user, 'hasRole') && $user->hasRole('admin');
+
+        $image = $data['image'] ?? null;
+        if (is_string($image) && (str_starts_with($image, 'data:') || strlen($image) > self::IMAGE_MAX_LENGTH)) {
+            $image = $this->saveDataUrlToStorage($image);
+        }
+        if (is_string($image) && strlen($image) > self::IMAGE_MAX_LENGTH) {
+            $image = null;
+        }
+
+        $imagesFourSides = $data['imagesFourSides'] ?? $data['images_four_sides'] ?? null;
+        if (is_array($imagesFourSides)) {
+            foreach (['front', 'rear', 'left', 'right'] as $side) {
+                $val = $imagesFourSides[$side] ?? null;
+                if (is_string($val) && (str_starts_with($val, 'data:') || strlen($val) > self::IMAGE_MAX_LENGTH)) {
+                    $saved = $this->saveDataUrlToStorage($val);
+                    $imagesFourSides[$side] = $saved ?: '';
+                } elseif (is_string($val) && strlen($val) > self::IMAGE_MAX_LENGTH) {
+                    $imagesFourSides[$side] = '';
+                }
+            }
+        }
+
+        $capacity = isset($data['capacity']) ? (int) $data['capacity'] : null;
+        if ($capacity === 0) {
+            $capacity = null;
+        }
+
         $attrs = [
             'name' => $data['name'] ?? null,
             'type' => $data['type'] ?? 'Car',
@@ -53,7 +84,7 @@ final class VehicleController extends Controller
             'price_per_day' => (float) ($data['pricePerDay'] ?? $data['price_per_day'] ?? 0),
             'original_price_per_day' => isset($data['originalPricePerDay']) ? (float) $data['originalPricePerDay'] : ($data['original_price_per_day'] ?? null),
             'description' => $data['description'] ?? null,
-            'image' => $data['image'] ?? null,
+            'image' => $image,
             'status' => $data['status'] ?? 'Available',
             'approved' => $isAdmin ? (bool) ($data['approved'] ?? false) : false,
             'hidden_from_listing' => $data['hiddenFromListing'] ?? $data['hidden_from_listing'] ?? false,
@@ -61,16 +92,40 @@ final class VehicleController extends Controller
             'host_name' => $data['hostName'] ?? $data['host_name'] ?? null,
             'business_name' => $data['businessName'] ?? $data['business_name'] ?? null,
             'car_type' => $data['carType'] ?? $data['car_type'] ?? null,
-            'capacity' => isset($data['capacity']) ? (int) $data['capacity'] : null,
+            'capacity' => $capacity,
             'rental_mode' => $this->normalizeRentalMode($data['rentalMode'] ?? $data['rental_mode'] ?? null),
             'min_rental_period_hours' => $this->normalizeMinRentalHours($data['minRentalPeriodHours'] ?? $data['min_rental_period_hours'] ?? null),
             'tags' => $data['tags'] ?? null,
-            'images_four_sides' => $data['imagesFourSides'] ?? $data['images_four_sides'] ?? null,
+            'images_four_sides' => $imagesFourSides,
         ];
         if ($request->user()) {
             $attrs['user_id'] = $request->user()->id;
         }
         return array_filter($attrs, fn ($v) => $v !== null);
+    }
+
+    /** Decode data URL, save to public disk, return path for DB (e.g. /storage/vehicle-images/xxx.jpg). */
+    private function saveDataUrlToStorage(string $dataUrl): ?string
+    {
+        if (!preg_match('#^data:([^;]+);base64,(.+)$#s', $dataUrl, $m)) {
+            return null;
+        }
+        $mime = trim($m[1]);
+        $body = base64_decode($m[2], true);
+        if ($body === false || $body === '') {
+            return null;
+        }
+        $ext = 'jpg';
+        if (str_contains($mime, 'png')) {
+            $ext = 'png';
+        } elseif (str_contains($mime, 'gif')) {
+            $ext = 'gif';
+        } elseif (str_contains($mime, 'webp')) {
+            $ext = 'webp';
+        }
+        $path = 'vehicle-images/' . Str::uuid() . '.' . $ext;
+        Storage::disk('public')->put($path, $body);
+        return '/storage/' . $path;
     }
 
     private function normalizeRentalMode(mixed $value): ?string
@@ -145,13 +200,19 @@ final class VehicleController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        $attrs = $this->requestToAttributes($request);
-        $attrs['name'] = $attrs['name'] ?? 'Unnamed';
-        $attrs['location'] = $attrs['location'] ?? '';
+        try {
+            $attrs = $this->requestToAttributes($request);
+            $attrs['name'] = $attrs['name'] ?? 'Unnamed';
+            $attrs['location'] = $attrs['location'] ?? '';
 
-        $vehicle = Vehicle::create($attrs);
+            $vehicle = Vehicle::create($attrs);
 
-        return response()->json(['data' => $this->toResponse($vehicle)], 201);
+            return response()->json(['data' => $this->toResponse($vehicle)], 201);
+        } catch (\Throwable $e) {
+            report($e);
+            $message = config('app.debug') ? $e->getMessage() : 'Could not save vehicle. Check your connection and try again.';
+            return response()->json(['message' => $message], 500);
+        }
     }
 
     public function update(Request $request, string $id): JsonResponse
