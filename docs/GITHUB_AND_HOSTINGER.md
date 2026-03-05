@@ -4,6 +4,30 @@ Use GitHub for version control and Hostinger for hosting. Repo: **https://github
 
 ---
 
+## Switch to GitHub publishing (stop using old uploaded files)
+
+If the site is still running from files you uploaded earlier and you want the live site to use the code from GitHub:
+
+1. **Update the repo on the server**  
+   In Hostinger **GIT** → **Manage Repositories** → click **Deploy** for the BulodPH repo (so `bulodph_repo` has the latest from GitHub).
+
+2. **Replace public_html with repo code**  
+   In **File Manager**:
+   - Copy **bulodph_repo/deploy/public_index.php** → **public_html/index.php** (overwrite).
+   - Copy **bulodph_repo/bulodph-backend/public/.htaccess.production** → **public_html/.htaccess** (overwrite).
+   - Replace **public_html/bulodph-backend** with **bulodph_repo/bulodph-backend**: either delete the old `bulodph-backend` and copy the folder from `bulodph_repo`, or copy everything from `bulodph_repo/bulodph-backend` over. **Keep** your existing **public_html/bulodph-backend/.env** (and **vendor** if you have it) so the site keeps using your database and config; only replace code files.
+
+3. **Rebuild and upload the frontend**  
+   On your PC: `cd bulodph-frontend`, run `npm run build`, then upload the contents of **dist/** (e.g. **index.html** and **assets/**) into **public_html** (overwrite). So the Vue app is the one built from the repo.
+
+4. **From now on (publishing from GitHub)**  
+   - Push changes to GitHub.  
+   - In Hostinger GIT click **Deploy**.  
+   - Copy from **bulodph_repo** to **public_html** as in step 2 (index.php, .htaccess, bulodph-backend code; keep .env and vendor).  
+   - If the frontend changed: run `npm run build` and upload **dist/** to **public_html**.
+
+---
+
 ## 1. Push your code to GitHub
 
 From the **BulodPH** folder (the one that contains `bulodph-backend` and `bulodph-frontend`):
@@ -65,6 +89,47 @@ After the first deploy, Hostinger will clone the repo. Then do the following.
 
 4. **Later updates**
    - In Hostinger GIT, use **Pull** (or the repo’s update button) to get latest from GitHub. Then repeat step 3 (build Vue and upload `dist/`) and update backend (e.g. `composer install`, `php artisan migrate`) if needed.
+
+### Demo login: "Invalid email or password"
+
+The demo user **admin@bulodph.demo** / **Demo123!** must exist in the database with the correct password hash.
+
+- **If you can run Artisan on the server** (SSH or Hostinger’s PHP/run):  
+  `php artisan db:seed --class=DemoAccountsSeeder` (creates demo users), or if users already exist: `php artisan demo:reset-passwords` (sets password to Demo123!).
+- **If you cannot run Artisan**:  
+  1. Pull the latest repo (so `deploy/fix_demo_login_once.php` is in `bulodph_repo`).  
+  2. Copy `bulodph_repo/deploy/fix_demo_login_once.php` to `public_html/`.  
+  3. Open **https://bulodph.com/fix_demo_login_once.php** in the browser once.  
+  4. Delete `public_html/fix_demo_login_once.php` after use.
+
+If the script says “Not found” for the demo user, import **bulodph.sql** or run `php artisan migrate` and `php artisan db:seed --class=DemoAccountsSeeder`, then run the fix again.
+
+---
+
+**Still "Invalid email or password" after updating passwords in phpMyAdmin?**
+
+1. **Check which API the site calls** — On https://bulodph.com open DevTools (F12) → Network tab → try Login. If the request goes to **http://localhost:8000/api/login**, the frontend was built for dev; rebuild with production env and re-upload (step 3 below). If it goes to **https://bulodph.com/api/login**, the backend is being hit; then check step 2.
+2. **Check backend database** — In **public_html/bulodph-backend/.env** on Hostinger, ensure `DB_DATABASE=u476461747_bulodph` (the same DB where you ran the password UPDATE). If it points to another database, fix it or run the same UPDATE there.
+3. **Rebuild and re-upload the frontend** — On your PC: `cd bulodph-frontend`, ensure `.env.production` has `VITE_API_URL=/api`, run `npm run build`, then upload the new **dist/** contents to **public_html**.
+
+---
+
+**500 Internal Server Error on POST /api/login**
+
+The backend is reached but Laravel is throwing an exception. Do the following:
+
+1. **See the actual error**  
+   - In Hostinger **File Manager** open **public_html/bulodph-backend/storage/logs/laravel.log** and check the last entries (scroll to the bottom). The exception message and file/line will be there.  
+   - Or upload **deploy/debug_login_500.php** to **public_html**, open **https://bulodph.com/debug_login_500.php** in the browser, then delete the file. The page will show the error if it happens during login (user lookup, password check, token creation).
+
+2. **Common causes and fixes**  
+   - **Missing table `personal_access_tokens`** — Run migrations on the server (or import a DB that includes them): `php artisan migrate` or re-import **bulodph.sql**.  
+   - **Storage not writable** — In **public_html/bulodph-backend**, ensure **storage** and **bootstrap/cache** are writable by the web server (e.g. chmod 775 or use Hostinger’s “Fix File Ownership”).  
+   - **Missing or wrong .env** — In **public_html/bulodph-backend/.env** set `APP_KEY=...` (run `php artisan key:generate` locally and copy, or generate a 32-char key), and correct `DB_*` for the Hostinger database.  
+   - **Spatie permission tables missing** — Run migrations or ensure **bulodph.sql** (which includes roles/permissions tables) is imported.
+
+3. **Temporarily show errors in the browser**  
+   In **public_html/bulodph-backend/.env** set `APP_DEBUG=true` and reload **https://bulodph.com/api/login** (e.g. via a form submit). The response may show the exception. Set `APP_DEBUG=false` again after debugging.
 
 ---
 
