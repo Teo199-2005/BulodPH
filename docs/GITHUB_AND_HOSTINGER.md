@@ -94,6 +94,16 @@ After the first deploy, Hostinger will clone the repo. Then do the following.
 
 The demo user **admin@bulodph.demo** / **Demo123!** must exist in the database with the correct password hash.
 
+**Running locally (your PC):**
+1. **Use a local database** — The repo’s `.env` may contain **Hostinger** DB credentials (`u476461747_*`). Those only work on Hostinger; from your PC you get "Access denied" and login returns "Login failed". For local dev, point the backend at a **local MySQL**:
+   - Create a database (e.g. `bulodph`) and a user in MySQL on your machine (XAMPP, WAMP, or standalone MySQL).
+   - In **bulodph-backend/.env** set: `DB_HOST=127.0.0.1`, `DB_DATABASE=bulodph`, `DB_USERNAME=root` (or your local user), `DB_PASSWORD=` (or your local password).
+   - Import **bulodph.sql** into that database (e.g. with phpMyAdmin or `mysql -u root -p bulodph < bulodph.sql`).
+2. Start the backend: `cd bulodph-backend` then `php artisan serve`.
+3. Set demo passwords: `php artisan demo:reset-passwords` (or create users with `php artisan db:seed --class=DemoAccountsSeeder`).
+4. Run the frontend: in **bulodph-frontend** ensure `.env` has `VITE_API_URL=http://localhost:8000/api`, then `npm run dev`.
+
+**On Hostinger (production):**
 - **If you can run Artisan on the server** (SSH or Hostinger’s PHP/run):  
   `php artisan db:seed --class=DemoAccountsSeeder` (creates demo users), or if users already exist: `php artisan demo:reset-passwords` (sets password to Demo123!).
 - **If you cannot run Artisan**:  
