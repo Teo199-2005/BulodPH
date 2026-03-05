@@ -1,0 +1,15 @@
+# Root-level env and IDE
+.env
+.env.*
+!.env.example
+.cursor/
+
+# Dependencies and build (subprojects have their own; this avoids accidental add from root)
+node_modules/
+vendor/
+
+# Frontend build output (commit source, not dist)
+bulodph-frontend/dist/
+
+# Optional: uncomment to avoid committing DB dumps
+# *.sql

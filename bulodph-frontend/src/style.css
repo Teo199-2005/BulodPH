@@ -1,0 +1,1741 @@
+@import "swiper/css";
+@import "swiper/css/pagination";
+@import "swiper/css/navigation";
+@import "choices.js/public/assets/styles/choices.min.css";
+
+/* BulodPH Design System — Navy Blue, Modern Clean UI */
+:root {
+  /* Brand tokens — Navy primary palette */
+  --primary-cyan: #60a5fa;
+  /* Accent / CTA — main buttons, links */
+  --trust-blue: #0f172a;
+  /* Navy — nav, headers, footer, primary anchor */
+  --navy-dark: #020617;
+  /* Darker navy for gradients */
+  --navy-light: #1e40af;
+  /* Bright navy/blue */
+  --bg-light: #F8FAFC;
+  /* Ghost White — main background */
+  --text-main: #1F2937;
+  /* Slate Charcoal — body text */
+  --accent-green: #10B981;
+  /* Verified/Available badges only */
+  --radius: 12px;
+  /* Modern curve — buttons, cards */
+
+  /* Sky/navy mapping (compatibility) */
+  --sky-50: #eff6ff;
+  --sky-100: #dbeafe;
+  --sky-200: #bfdbfe;
+  --sky-300: #93c5fd;
+  --sky-400: #60a5fa;
+  --sky-500: #3b82f6;
+  --sky-600: #1e40af;
+  --sky-700: #0f172a;
+
+  /* Surfaces */
+  --surface-0: #FFFFFF;
+  --surface-1: #F8FAFC;
+  --surface-2: #F1F5F9;
+  --surface-3: #E2E8F0;
+
+  /* Text */
+  --text-primary: #1F2937;
+  --text-secondary: #64748B;
+  --text-muted: #94A3B8;
+  --text-secondary-accessible: #475569;
+
+  /* Feedback (success/error inline) */
+  --feedback-success-bg: rgba(16, 185, 129, 0.08);
+  --feedback-success-border: rgba(16, 185, 129, 0.35);
+  --feedback-error-bg: rgba(239, 68, 68, 0.08);
+  --feedback-error-border: rgba(239, 68, 68, 0.35);
+
+  /* Borders */
+  --border-subtle: #E2E8F0;
+  --border-focus: rgba(96, 165, 250, 0.4);
+  --border-card: #F1F5F9;
+
+  /* Hover & chip tokens */
+  --hover-overlay: rgba(15, 23, 42, 0.04);
+  --chip-success-bg: rgba(16, 185, 129, 0.12);
+  --chip-warning-bg: rgba(245, 158, 11, 0.12);
+  --chip-error-bg: rgba(239, 68, 68, 0.12);
+
+  /* Shadows — softer, less tinted; layered for elevation */
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 8px 24px rgba(15, 23, 42, 0.12), 0 2px 6px rgba(15, 23, 42, 0.06);
+  --shadow-card-hover: 0 8px 24px rgba(15, 23, 42, 0.16), 0 2px 8px rgba(15, 23, 42, 0.08);
+  --shadow-widget: 0 2px 12px rgba(15, 23, 42, 0.06);
+  --shadow-modal: 0 24px 48px rgba(15, 23, 42, 0.16);
+  --shadow-dropdown: 0 4px 16px rgba(15, 23, 42, 0.12);
+  --shadow-topbar: 0 2px 8px rgba(15, 23, 42, 0.06);
+
+  /* Brand gradients and glow */
+  --brand-gradient: linear-gradient(135deg, #0f172a 0%, #1e3a5f 45%, #2563eb 100%);
+  --brand-gradient-hover: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e40af 100%);
+  --brand-glow: 0 10px 24px rgba(15, 23, 42, 0.22), 0 2px 8px rgba(15, 23, 42, 0.14);
+
+  /* Spacing scale — 4px grid (enterprise consistency) */
+  /* Guideline: Use --space-4 (16px) or more for button groups, form actions, and icon+text; gap-2/3 (8–12px) often feel cramped. */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  /* Comfortable spacing for actions (use in form actions, button groups) */
+  --gap-comfortable: 1rem;
+  --gap-relaxed: 1.25rem;
+  --page-padding-x: 12px;
+  --page-padding-y: 20px;
+  --section-gap: 24px;
+  --card-padding: 20px;
+  --page-max-width: 1520px;
+
+  /* Transition system */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+  --transition-slow: 0.3s ease;
+
+  /* Radius (friendly app feel) */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  /* Price & discount (marketing appeal) */
+  --price-main-color: var(--trust-blue, #0f172a);
+  --price-original-color: var(--text-muted, #94A3B8);
+  --price-savings-color: var(--accent-green, #10B981);
+  --price-badge-bg: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  --price-badge-text: #fff;
+  --price-promo-bg: rgba(96, 165, 250, 0.15);
+  --price-promo-text: var(--sky-600, #1e40af);
+
+  /* Sidebar / nav – consistent role theme (useRoleTheme sets --role-primary, etc.) */
+  --navy-icon: #1e3a5f;
+  --role-primary: #1e3a5f;
+  --role-primary-dark: #334155;
+  --sidebar-text: rgba(248, 250, 252, 0.9);
+  --sidebar-text-muted: rgba(248, 250, 252, 0.5);
+  --sidebar-label: rgba(248, 250, 252, 0.45);
+
+  /* Metallic design system – gradients, shine, borders */
+  --metallic-light: #f1f5f9;
+  --metallic-highlight: #e2e8f0;
+  --metallic-mid: #cbd5e1;
+  --metallic-mid-dark: #94a3b8;
+  --metallic-dark: #64748b;
+  --metallic-shadow: #475569;
+  --metallic-gradient: linear-gradient(145deg, #f8fafc 0%, #f1f5f9 25%, #e2e8f0 50%, #cbd5e1 85%, #94a3b8 100%);
+  --metallic-gradient-vertical: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 40%, #cbd5e1 100%);
+  --metallic-border: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(203, 213, 225, 0.6) 50%, rgba(148, 163, 184, 0.4) 100%);
+  --metallic-shadow-sm: 0 1px 2px rgba(71, 85, 105, 0.08), 0 1px 3px rgba(255, 255, 255, 0.5) inset;
+  --metallic-shadow-hover: 0 4px 12px rgba(71, 85, 105, 0.12), 0 2px 4px rgba(255, 255, 255, 0.6) inset;
+  --metallic-transition: transform 0.25s ease, box-shadow 0.3s ease, border-color 0.25s ease, background 0.25s ease;
+
+  /* Glassmorphism tokens */
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-bg-strong: rgba(255, 255, 255, 0.85);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.5);
+  --glass-border-dark: 1px solid rgba(15, 23, 42, 0.08);
+  --glass-blur: 16px;
+  --glass-blur-strong: 24px;
+
+  /* Typography scale – slightly larger for readability (middle-aged users, bare essentials) */
+  --text-xs: 0.75rem;
+  /* 12px – labels, time slots */
+  --text-sm: 0.8125rem;
+  /* 13px – captions, secondary labels */
+  --text-body: 0.9375rem;
+  /* 15px – body, page subtitle */
+  --text-body-sm: 0.875rem;
+  /* 14px – list subtitles, meta text */
+  --text-body-lg: 1rem;
+  /* 16px – list titles, emphasised body */
+  --text-base: 1.0625rem;
+  /* 17px – section titles, inputs */
+  --text-md: 1.125rem;
+  /* 18px – modal title */
+  --text-lg: 1.25rem;
+  /* 20px – card headings */
+  --text-xl: 1.375rem;
+  /* 22px – subheadings */
+  --text-2xl: 1.75rem;
+  /* 28px – page title */
+  --text-3xl: 2rem;
+  /* 32px – hero/dashboard titles */
+
+  /* Line heights */
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.6;
+
+  /* Letter spacing */
+  --tracking-tighter: -0.03em;
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0.01em;
+
+  /* Monospace for IDs, codes, transaction numbers */
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', 'Source Code Pro', Menlo, Monaco, monospace;
+
+  /* Base typography & layout */
+  font-family: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  color: var(--text-main);
+  background-color: var(--bg-light);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Slightly larger base for readability (middle-aged users) */
+html {
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-size: 1rem;
+  overflow-x: hidden;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+a {
+  font-weight: 500;
+  color: var(--sky-600);
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: var(--sky-500);
+}
+
+#app {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* ===== Metallic design: keyframe animations (used across dashboards, modals, cards) ===== */
+@keyframes metallicShine {
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: translateX(-100%) skewX(-12deg);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: translateX(200%) skewX(-12deg);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseSubtle {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.92;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Global background (dashboard/main content) – use class app-dots-bg.
+   Subtle gradient + climpek texture for depth so glass cards read well. */
+.app-dots-bg {
+  background-color: var(--bg-light, #f8fafc) !important;
+  background-image:
+    url("/images/climpek.svg"),
+    linear-gradient(165deg, rgba(248, 250, 252, 1) 0%, rgba(241, 245, 249, 1) 40%, rgba(226, 232, 240, 1) 100%) !important;
+  background-repeat: repeat, repeat !important;
+  background-size: auto, auto !important;
+  background-position: 0 0, 0 0 !important;
+  min-height: 100%;
+}
+
+/* Dashboard: subtle logo watermark behind main content (above app-dots-bg) */
+.dashboard-watermark-wrap {
+  position: relative;
+}
+
+.dashboard-watermark {
+  position: absolute;
+  inset: 0;
+  background-image: url("/logo.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: min(24%, 180px);
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dashboard-watermark-wrap .app-container.main-content-inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* Paired action buttons (Accept/Decline, Approve/Reject, etc.) – consistent spacing */
+.action-buttons-gap {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* ===== Accessibility ===== */
+/* Skip link: visually hidden until focused, first in tab order */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  z-index: 9999;
+  padding: 12px 20px;
+  background: var(--trust-blue, #0f172a);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: var(--radius, 12px);
+  text-decoration: none;
+  margin: 12px;
+  box-shadow: var(--shadow-lg);
+  transition: left 0.15s ease;
+}
+
+.skip-link:focus {
+  left: 0;
+  top: 0;
+  outline: 3px solid var(--primary-cyan, #60a5fa);
+  outline-offset: 2px;
+}
+
+/* Focus styles: visible ring for keyboard users (focus-visible avoids ring on mouse click) */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible,
+.v-btn:focus-visible,
+.v-list-item:focus-visible {
+  outline: 2px solid var(--primary-cyan, #60a5fa);
+  outline-offset: 2px;
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.v-field:focus-within {
+  outline: 2px solid var(--primary-cyan, #60a5fa);
+  outline-offset: 0;
+}
+
+/* Disabled states – consistent opacity */
+.v-btn--disabled,
+.v-btn.v-btn--disabled,
+.v-field--disabled,
+.v-select--disabled .v-field {
+  opacity: 0.6;
+}
+
+/* Typography scale is tuned for readability; sidebar and bottom nav use larger items. */
+
+/* ===== Spacing: prevent cramped buttons, text, and images ===== */
+/* Why things look cramped: gap-2 = 8px, gap-3 = 12px. For button groups and icon+text use 1rem (16px) or more. */
+
+/* Any flex row that contains multiple buttons gets comfortable gap (overrides gap-2/gap-3) */
+.d-flex.gap-2:has(> .v-btn + .v-btn),
+.d-flex.gap-3:has(> .v-btn + .v-btn) {
+  gap: var(--gap-comfortable, 1rem) !important;
+}
+
+.d-flex.gap-1 .v-btn,
+.d-flex.gap-2 .v-btn {
+  margin: 0;
+}
+
+.d-flex.flex-wrap .v-btn {
+  margin: 2px 0;
+}
+
+/* Vuetify buttons: more space between prepend icon and label so icon+text never feel cramped */
+.v-btn .v-btn__prepend {
+  margin-inline-end: 0.5rem;
+}
+
+/* Utility classes — use these for new form actions or button groups */
+.gap-comfortable { gap: var(--gap-comfortable, 1rem) !important; }
+.gap-relaxed { gap: var(--gap-relaxed, 1.25rem) !important; }
+.gap-relaxed-lg { gap: 1.5rem !important; }
+
+/* Force comfortable gaps in action/button rows (existing named classes) */
+.action-buttons,
+.btn-group,
+.listing-card__actions,
+.vehicle-card .d-flex.gap-2,
+.section-actions,
+.table-action-buttons {
+  gap: var(--space-4) !important;
+  margin-top: var(--space-3);
+}
+
+/* Card body: comfortable padding and spacing between elements */
+.v-card-text.pa-4 .text-caption,
+.v-card-text.pa-4 .text-body-2,
+.v-card-text.pa-4 p {
+  margin-bottom: 12px !important;
+}
+
+.v-card-text.pa-4 .text-caption:last-child,
+.v-card-text.pa-4 .text-body-2:last-child,
+.v-card-text.pa-4 p:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Image + text separation in cards */
+.listing-card__image+.v-card-text,
+.vehicle-card__image-wrap+.v-card-text,
+.v-card .v-img+.v-card-text,
+.browse-card__image-wrap+.v-card-text {
+  padding-top: 20px !important;
+}
+
+/* Listing/vehicle card internal spacing */
+.listing-card__name {
+  margin-bottom: 8px !important;
+}
+
+.listing-card__meta {
+  margin-bottom: 14px !important;
+}
+
+.vehicle-card .text-h6 {
+  margin-bottom: 8px !important;
+}
+
+.vehicle-card .text-caption {
+  margin-bottom: 12px !important;
+}
+
+.vehicle-card .text-body-2 {
+  margin-bottom: 10px !important;
+}
+
+/* Filter bars and form rows */
+.filters-bar,
+.filters-bar-wrap .d-flex,
+.browse-filters-wrap .d-flex {
+  gap: var(--space-3) !important;
+}
+
+
+/* ===== Layout & Container System ===== */
+/* Global container — max-width, centered; main-content-wrap provides padding */
+.app-container {
+  width: 100%;
+  max-width: var(--page-max-width, 1280px);
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+.main-content-inner.app-container {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Spacing utilities (use with flex/grid) */
+.gap-section {
+  gap: var(--section-gap) !important;
+}
+
+.gap-card {
+  gap: var(--space-4) !important;
+}
+
+.pa-card {
+  padding: var(--card-padding) !important;
+}
+
+/* Utility classes – replace inline max-width/min-width for forms & filters */
+.max-w-320 { max-width: 360px !important; }
+.bg-surface-light { background-color: var(--bg-light, #f8fafc) !important; }
+.max-w-260 { max-width: 260px !important; }
+.max-w-220 { max-width: 220px !important; }
+.max-w-200 { max-width: 200px !important; }
+.max-w-160 { max-width: 160px !important; }
+.max-w-150 { max-width: 150px !important; }
+.max-w-140 { max-width: 140px !important; }
+.min-w-220 { min-width: 220px !important; }
+.min-w-200 { min-width: 200px !important; }
+.min-w-160 { min-width: 160px !important; }
+.min-w-140 { min-width: 140px !important; }
+
+.mb-section {
+  margin-bottom: var(--section-gap) !important;
+}
+
+/* Topbar title truncation (add to .topbar__title on desktop when space is tight) */
+.topbar__title--truncate,
+.topbar .topbar__title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+}
+
+/* Mobile: tighter page padding */
+@media (max-width: 599px) {
+  :root {
+    --page-padding-x: 8px;
+    --page-padding-y: 16px;
+  }
+}
+
+/* ===== Dashboard / Page template – reusable across all app pages (DRY) ===== */
+.page-template {
+  width: 100%;
+  min-height: 100%;
+}
+
+.page-template__body {
+  width: 100%;
+  padding-bottom: 1rem;
+}
+
+/* Optional back link (use in DashboardTemplate or views) */
+.page-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.page-back:hover {
+  color: var(--sky-600);
+}
+
+/* Shared page header (used by DashboardTemplate and layout) */
+.page-header {
+  margin: 0 0 1.5rem;
+}
+
+.page-header--glass {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(248, 250, 252, 0.7) 100%);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  box-shadow: var(--shadow-sm);
+}
+
+.page-header--with-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+/* Page title/subtitle – single source of truth for all dashboard pages */
+.page-title,
+h1.page-title {
+  font-size: var(--text-2xl) !important;
+  font-weight: 700 !important;
+  color: var(--text-primary) !important;
+  letter-spacing: var(--tracking-tight, -0.02em);
+  margin: 0 0 0.25rem;
+  line-height: var(--leading-tight, 1.25);
+}
+
+.page-subtitle,
+.page-header .page-subtitle {
+  font-size: var(--text-body) !important;
+  color: var(--text-secondary) !important;
+  font-weight: 500;
+  margin: 0;
+  line-height: var(--leading-snug, 1.4);
+}
+
+/* Shared card style – glassmorphism + metallic borders & hover */
+.v-card.modern-card,
+.modern-card.v-card,
+.main-content-wrap .v-card.modern-card,
+.main-content-wrap .modern-card.v-card {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--border-subtle, #e2e8f0) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-sm), var(--metallic-shadow-sm), 0 0 0 1px rgba(255, 255, 255, 0.4) inset !important;
+  transition: var(--metallic-transition);
+  animation: fadeInUp 0.35s ease-out;
+}
+
+.v-card.modern-card:hover,
+.modern-card.v-card:hover,
+.main-content-wrap .v-card.modern-card:hover,
+.main-content-wrap .modern-card.v-card:hover {
+  box-shadow: var(--shadow-md), var(--metallic-shadow-hover), 0 0 0 1px rgba(255, 255, 255, 0.5) inset !important;
+  border-color: var(--metallic-mid) !important;
+  transform: translateY(-1px);
+}
+
+/* Section card header (icon + title) – BulodPH navy/slate (no sky blue) */
+.section-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3, 0.75rem);
+  padding: var(--space-4, 1rem) var(--space-5, 1.25rem);
+}
+
+.section-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--metallic-gradient-vertical) !important;
+  color: var(--navy-icon, #1e3a5f);
+  flex-shrink: 0;
+  box-shadow: var(--metallic-shadow-sm);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  position: relative;
+  overflow: hidden;
+  transition: var(--metallic-transition);
+}
+
+.section-card-icon::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.4) 45%, transparent 55%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.section-card-icon:hover {
+  box-shadow: var(--metallic-shadow-hover);
+  transform: scale(1.05);
+}
+
+.section-card-icon:hover::after {
+  opacity: 1;
+  animation: metallicShine 0.8s ease-in-out;
+}
+
+.section-card-title {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+/* Page enter animation (optional – use class .page-template--animate on template) */
+.page-template--animate {
+  animation: pageFadeIn 0.45s ease-out;
+}
+
+.page-template--animate .page-template__body {
+  animation: fadeInUp 0.5s ease-out 0.05s both;
+}
+
+/* Entry animations for lists/cards */
+.animate-slide-in-right {
+  animation: slideInRight 0.35s ease-out both;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease-out both;
+}
+
+/* List stagger – use .animate-stagger on parent, add data-stagger-index on children */
+.animate-stagger>* {
+  animation: fadeInUp 0.35s ease-out both;
+}
+
+.animate-stagger>*:nth-child(1) {
+  animation-delay: 0.02s;
+}
+
+.animate-stagger>*:nth-child(2) {
+  animation-delay: 0.05s;
+}
+
+.animate-stagger>*:nth-child(3) {
+  animation-delay: 0.08s;
+}
+
+.animate-stagger>*:nth-child(4) {
+  animation-delay: 0.11s;
+}
+
+.animate-stagger>*:nth-child(5) {
+  animation-delay: 0.14s;
+}
+
+.animate-stagger>*:nth-child(6) {
+  animation-delay: 0.17s;
+}
+
+/* Global hover: cards (formal lift + shadow); respect reduced motion */
+.modern-card,
+.vehicle-card,
+.hpa-stats-card {
+  transition: transform var(--transition-slow), box-shadow var(--transition-slow);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .modern-card.vehicle-card:hover,
+  .modern-card.vehicle-card:focus-within,
+  a:hover .modern-card.vehicle-card,
+  .modern-card.hpa-stats-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(30, 58, 95, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06);
+  }
+}
+
+/* Primary / tonal button hover (subtle scale); respect reduced motion */
+.v-btn {
+  transition: transform var(--transition-base), background-color var(--transition-base), color var(--transition-base);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .v-btn.v-btn--variant-tonal.v-btn--color-primary:hover:not(.v-btn--disabled),
+  .v-btn.v-btn--variant-flat.v-btn--color-primary:hover:not(.v-btn--disabled) {
+    transform: scale(1.02);
+  }
+}
+
+/* Section card header with actions (e.g. toggle, filters) */
+.section-card-header--with-actions {
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Dashboard-specific utilities */
+.kpi-row {
+  gap: 1rem;
+}
+
+.dashboard-list {
+  background: transparent !important;
+}
+
+.dashboard-list-title {
+  font-size: var(--text-body-lg) !important;
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+}
+
+.dashboard-list-subtitle {
+  font-size: var(--text-body-sm) !important;
+  color: var(--text-secondary) !important;
+}
+
+/* Optional: use these classes for consistent text sizes anywhere */
+.text-size-xs {
+  font-size: var(--text-xs) !important;
+}
+
+.text-size-sm {
+  font-size: var(--text-sm) !important;
+}
+
+.text-size-body {
+  font-size: var(--text-body) !important;
+}
+
+.text-size-body-sm {
+  font-size: var(--text-body-sm) !important;
+}
+
+.text-size-body-lg {
+  font-size: var(--text-body-lg) !important;
+}
+
+.text-size-base {
+  font-size: var(--text-base) !important;
+}
+
+.text-size-lg {
+  font-size: var(--text-lg) !important;
+}
+
+.text-size-xl {
+  font-size: var(--text-xl) !important;
+}
+
+.text-size-2xl {
+  font-size: var(--text-2xl) !important;
+}
+
+.text-size-3xl {
+  font-size: var(--text-3xl) !important;
+}
+
+/* Form label – uppercase for section labels */
+.form-label-required::after {
+  content: ' *';
+  color: var(--error, #ef4444);
+}
+
+/* Form labels – consistent size and contrast */
+.v-label,
+.v-field__label {
+  font-size: var(--text-sm) !important;
+  color: var(--text-secondary) !important;
+}
+
+.v-field--focused .v-field__label,
+.v-field--active .v-field__label {
+  color: var(--role-primary, var(--sky-600)) !important;
+}
+
+/* Number alignment for stats, KPIs, prices, tables */
+.font-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Icon sizes – 20px inline, 24px buttons */
+.icon-inline {
+  width: 20px;
+  height: 20px;
+}
+
+.icon-button {
+  width: 24px;
+  height: 24px;
+}
+
+/* Touch targets – min 44px on mobile */
+@media (max-width: 959px) {
+  .v-btn.v-btn--size-small.v-btn--icon {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* Search result highlighting */
+.hpa-search-highlight {
+  background: rgba(96, 165, 250, 0.25);
+  padding: 0.1em 0.2em;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+}
+
+/* Monospace for IDs, codes, transaction numbers */
+.font-mono {
+  font-family: var(--font-mono) !important;
+}
+
+/* Heading hierarchy utilities */
+.heading-page {
+  font-size: var(--text-2xl) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em;
+  color: var(--text-primary) !important;
+}
+
+.heading-section {
+  font-size: var(--text-base) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.02em;
+  color: var(--text-primary) !important;
+}
+
+.heading-card {
+  font-size: var(--text-lg) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em;
+  color: var(--text-primary) !important;
+}
+
+.label-uppercase {
+  font-size: var(--text-xs) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-secondary) !important;
+}
+
+.dashboard-link-btn {
+  color: var(--role-primary, #1e3a5f) !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+}
+
+.dashboard-link-btn:hover {
+  color: var(--role-primary-dark, #334155) !important;
+  background: var(--hover-overlay) !important;
+}
+
+.dashboard-avatar {
+  box-shadow: var(--shadow-md);
+}
+
+/* Metallic-style buttons: hover lift and shadow (dashboards, modals, tables) */
+.v-btn:not(.v-btn--disabled) {
+  transition: var(--metallic-transition);
+}
+
+.v-btn--variant-flat.v-btn--color-primary,
+.v-btn--variant-elevated.v-btn--color-primary {
+  background: var(--brand-gradient) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: var(--brand-glow) !important;
+}
+
+.v-btn--variant-flat.v-btn--color-primary:hover,
+.v-btn--variant-elevated.v-btn--color-primary:hover {
+  background: var(--brand-gradient-hover) !important;
+  box-shadow: 0 14px 28px rgba(30, 58, 95, 0.25), 0 4px 10px rgba(30, 58, 95, 0.18) !important;
+}
+
+.v-btn--variant-tonal.v-btn--color-primary {
+  background: rgba(30, 58, 95, 0.12) !important;
+  color: var(--role-primary, #1e3a5f) !important;
+}
+
+.v-btn--variant-tonal.v-btn--color-primary:hover {
+  background: rgba(30, 58, 95, 0.18) !important;
+}
+
+.v-btn--variant-outlined.v-btn--color-primary {
+  border-color: rgba(30, 58, 95, 0.5) !important;
+  color: var(--role-primary, #1e3a5f) !important;
+}
+
+.v-btn--variant-outlined.v-btn--color-primary:hover {
+  border-color: rgba(30, 58, 95, 0.8) !important;
+}
+
+.v-btn.v-btn--variant-flat:not(.v-btn--disabled):active,
+.v-btn.v-btn--variant-elevated:not(.v-btn--disabled):active {
+  transform: scale(0.98);
+}
+
+.v-btn--variant-flat:not(.v-btn--disabled):hover,
+.v-btn--variant-tonal:not(.v-btn--disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: var(--metallic-shadow-hover);
+}
+
+.v-btn--variant-outlined {
+  border-width: 1.5px !important;
+}
+
+.v-btn--variant-outlined:not(.v-btn--disabled):hover {
+  transform: translateY(-1px);
+  border-color: var(--metallic-mid) !important;
+  box-shadow: var(--metallic-shadow-sm);
+}
+
+.v-btn--variant-text:not(.v-btn--disabled):hover {
+  transform: translateY(-1px);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Icon-only buttons: scale micro-interaction (premium polish) */
+.v-btn.v-btn--icon:not(.v-btn--disabled):hover {
+  transform: scale(1.05);
+}
+
+.v-btn.v-btn--icon:not(.v-btn--disabled):active {
+  transform: scale(0.98);
+}
+
+/* Chips: subtle metallic hover on dashboard/list chips */
+.v-chip {
+  transition: var(--metallic-transition);
+}
+
+.v-chip:hover {
+  box-shadow: 0 1px 3px rgba(71, 85, 105, 0.12), 0 1px 2px rgba(255, 255, 255, 0.4) inset;
+}
+
+/* Semantic chip variants using design tokens (use with variant="tonal") */
+.v-chip.v-chip--color-success.v-chip--variant-tonal {
+  background-color: var(--chip-success-bg) !important;
+}
+
+.v-chip.v-chip--color-warning.v-chip--variant-tonal {
+  background-color: var(--chip-warning-bg) !important;
+}
+
+.v-chip.v-chip--color-error.v-chip--variant-tonal {
+  background-color: var(--chip-error-bg) !important;
+}
+
+.dashboard-mode-toggle {
+  border-color: var(--border-subtle) !important;
+  background: var(--surface-1) !important;
+}
+
+.dashboard-mode-toggle :deep(.v-btn--active) {
+  background: var(--role-primary, #1e3a5f) !important;
+  color: white !important;
+}
+
+/* Chart containers – use .chart-height for consistent height across dashboard & reports */
+.chart-height {
+  min-height: 260px;
+  height: 260px;
+  position: relative;
+}
+
+/* Shared content divider – same as dashboard (use on any page for section cards) */
+.content-divider,
+.reports-divider,
+.detail-divider,
+.dashboard-divider {
+  border-color: var(--border-subtle) !important;
+  opacity: 1;
+}
+
+/* Chart.js palette – BulodPH navy/slate (no sky blue) */
+.chart-palette-primary {
+  background-color: var(--role-primary, #1e3a5f) !important;
+}
+
+.chart-palette-secondary {
+  background-color: var(--metallic-shadow, #475569) !important;
+}
+
+.chart-palette-muted {
+  background-color: var(--metallic-dark, #64748b) !important;
+}
+
+.chart-palette-success {
+  background-color: var(--accent-green, #059669) !important;
+}
+
+/* Modal overlay (global) */
+.hpa-modal-overlay {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Dialog/modal content – strong elevation for overlays */
+.hpa-modal-overlay .v-overlay__content .v-card,
+.hpa-modal__content .v-card {
+  box-shadow: var(--shadow-modal, 0 24px 48px rgba(0, 0, 0, 0.12)) !important;
+}
+
+/* Raw v-dialog cards: clean shadow, no colored borders or focus rings */
+.v-dialog .v-overlay__content .v-card {
+  box-shadow: var(--shadow-modal, 0 24px 48px rgba(0, 0, 0, 0.12)) !important;
+  border: none !important;
+  outline: none !important;
+}
+.v-dialog .v-overlay__content {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* ===== Tables: vertical dividers on all rows (v-data-table, v-table) ===== */
+.v-data-table .v-data-table__th:not(:last-child),
+.v-data-table .v-data-table__td:not(:last-child) {
+  border-right: 1px solid var(--border-subtle, #e2e8f0) !important;
+}
+.v-table .v-table__wrapper table thead th:not(:last-child),
+.v-table .v-table__wrapper table tbody td:not(:last-child) {
+  border-right: 1px solid var(--border-subtle, #e2e8f0) !important;
+}
+
+/* ===== Filters toggle button – clear label + funnel icon, consistent placement ===== */
+.filters-toggle-btn {
+  font-weight: 600;
+  text-transform: none;
+}
+.list-filters-expanded {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+/* ===== Glass form inputs (outlined variant) – soft bg, metallic focus ===== */
+.v-field--variant-outlined .v-field__outline {
+  --v-field-border-opacity: 0.5;
+}
+
+.v-field--variant-outlined:not(.v-field--disabled):hover .v-field__outline {
+  --v-field-border-opacity: 0.7;
+}
+
+.v-field--variant-outlined.v-field--focused .v-field__outline,
+.v-field--variant-outlined.v-field--active .v-field__outline {
+  --v-field-border-opacity: 1;
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.35), 0 1px 2px rgba(255, 255, 255, 0.5) inset;
+}
+
+/* Form field success/error feedback */
+.v-field--variant-outlined.v-input--error .v-field__outline {
+  --v-border-color: rgb(var(--v-theme-error));
+}
+
+.v-field--variant-outlined.v-input--error .v-field--focused .v-field__outline {
+  box-shadow: 0 0 0 2px var(--feedback-error-border);
+}
+
+/* Optional: soft glass bg for inputs inside dashboard cards */
+.modern-card .v-text-field .v-field,
+.modern-card .v-select .v-field {
+  background: rgba(248, 250, 252, 0.6) !important;
+}
+
+.modern-card .v-text-field .v-field:hover,
+.modern-card .v-select .v-field:hover {
+  background: rgba(248, 250, 252, 0.85) !important;
+}
+
+.v-field__input {
+  font-size: var(--text-body) !important;
+}
+
+/* Form section with left accent bar (use .section-card-accent for role accent) */
+.section-card-accent {
+  border-left: 4px solid var(--role-primary, var(--navy-icon, #1e3a5f));
+}
+
+/* Form section headers with icon (for Add/Edit vehicle, admin forms, etc.) */
+.form-section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  font-size: var(--text-base, 1.0625rem);
+  font-weight: 600;
+  color: var(--text-primary, #1f2937);
+  letter-spacing: -0.01em;
+}
+
+.form-section-header.form-section-header--spaced {
+  margin-top: 1.5rem;
+}
+
+.form-section-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md, 12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--metallic-gradient-vertical) !important;
+  color: var(--navy-icon, #1e3a5f);
+  flex-shrink: 0;
+  box-shadow: var(--metallic-shadow-sm);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* Toast container (global) */
+.hpa-toast-stack {
+  gap: 0.5rem;
+}
+
+/* Modern card – use .pa-card for consistent internal padding */
+.v-card.modern-card .v-card-text,
+.modern-card .v-card-text {
+  padding: var(--card-padding) !important;
+}
+
+/* Data table toolbar & bulk bar */
+.hpa-data-table__toolbar {
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.hpa-data-table__toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.table-divider {
+  border-color: var(--border-subtle) !important;
+}
+
+.hpa-data-table__bulk-actions {
+  background: var(--surface-1) !important;
+  border-top: 1px solid var(--border-subtle);
+  padding: var(--space-3) var(--space-5) !important;
+}
+
+/* Table cells – readable text size and spacing */
+.hpa-data-table :deep(.v-table .v-table__wrapper table tbody td),
+.hpa-data-table :deep(.v-data-table .v-table__wrapper table tbody td) {
+  font-size: var(--text-body-sm) !important;
+  color: var(--text-primary) !important;
+}
+
+.hpa-data-table :deep(.v-table .v-table__wrapper table thead th),
+.hpa-data-table :deep(.v-data-table .v-table__wrapper table thead th) {
+  font-size: var(--text-xs) !important;
+  font-weight: 600 !important;
+  color: var(--text-secondary) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ===== Login/Register page – pattern + texture image + shine ===== */
+/* 1) Column: base gradient + dot pattern + optional texture image */
+html body .login-page.auth-split-page .auth-form-column,
+.login-page.auth-split-page .auth-form-column {
+  position: relative !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  background-color: #f8fafc !important;
+  background-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.97) 0%, rgba(248, 250, 252, 0.95) 45%, rgba(241, 245, 249, 0.95) 100%),
+    url("/images/climpek.svg"),
+    url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%230284c7' fill-opacity='0.24'%3E%3Ccircle cx='4' cy='4' r='2'/%3E%3Ccircle cx='16' cy='4' r='2'/%3E%3Ccircle cx='28' cy='4' r='2'/%3E%3Ccircle cx='4' cy='16' r='2'/%3E%3Ccircle cx='16' cy='16' r='2'/%3E%3Ccircle cx='28' cy='16' r='2'/%3E%3Ccircle cx='4' cy='28' r='2'/%3E%3Ccircle cx='16' cy='28' r='2'/%3E%3Ccircle cx='28' cy='28' r='2'/%3E%3C/g%3E%3C/svg%3E") !important;
+  background-size: auto, auto, 32px 32px !important;
+  background-position: 0 0, 0 0, 0 0 !important;
+}
+
+/* 2) Gradient overlay – local only (no external image) */
+html body .login-page.auth-split-page .auth-form-column::after,
+.login-page.auth-split-page .auth-form-column::after {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.04) 0%, rgba(30, 64, 175, 0.06) 50%, rgba(59, 130, 246, 0.04) 100%) !important;
+  opacity: 1 !important;
+}
+
+/* 3) Shine overlay on column */
+html body .login-page.auth-split-page .auth-form-column::before,
+.login-page.auth-split-page .auth-form-column::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  background:
+    radial-gradient(ellipse 100% 70% at 8% 12%, rgba(255, 255, 255, 0.92) 0%, transparent 52%),
+    radial-gradient(ellipse 85% 55% at 92% 88%, rgba(59, 130, 246, 0.12) 0%, transparent 50%),
+    linear-gradient(148deg, rgba(255, 255, 255, 0.9) 0%, transparent 40%, transparent 60%, rgba(59, 130, 246, 0.06) 100%) !important;
+  animation: auth-shine-global 8s ease-in-out infinite !important;
+}
+
+@keyframes auth-shine-global {
+
+  0%,
+  100% {
+    opacity: 0.75;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* 3) Backup bg layer (child div) – climpek texture + gradient + dots; do not use solid bg or it hides texture */
+html body .login-page .auth-form-bg,
+html body .auth-page .auth-form-bg,
+.login-page .auth-form-bg,
+.auth-page .auth-form-bg {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  min-height: 100% !important;
+  background-color: var(--bg-light, #f8fafc) !important;
+  background-image:
+    url("/images/climpek.svg"),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.97) 0%, rgba(248, 250, 252, 0.95) 40%, rgba(241, 245, 249, 0.95) 100%),
+    url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%230284c7' fill-opacity='0.18'%3E%3Ccircle cx='4' cy='4' r='2'/%3E%3Ccircle cx='16' cy='4' r='2'/%3E%3Ccircle cx='28' cy='4' r='2'/%3E%3Ccircle cx='4' cy='16' r='2'/%3E%3Ccircle cx='16' cy='16' r='2'/%3E%3Ccircle cx='28' cy='16' r='2'/%3E%3Ccircle cx='4' cy='28' r='2'/%3E%3Ccircle cx='16' cy='28' r='2'/%3E%3Ccircle cx='28' cy='28' r='2'/%3E%3C/g%3E%3C/svg%3E") !important;
+  background-repeat: repeat, repeat, repeat !important;
+  background-size: auto, auto, 32px 32px !important;
+}
+
+/* 4) Form strip and panels must sit above bg and be transparent */
+html body .login-page .auth-panels-strip,
+html body .auth-page .auth-panels-strip,
+.login-page .auth-panels-strip,
+.auth-page .auth-panels-strip {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+html body .login-page .auth-panel,
+html body .auth-page .auth-panel,
+.login-page .auth-panel,
+.auth-page .auth-panel {
+  background: transparent !important;
+}
+
+html body .login-page .login-form-container,
+html body .auth-page .auth-form-card,
+html body .auth-page .login-form-container,
+.login-page .login-form-container,
+.auth-page .auth-form-card {
+  background: transparent !important;
+}
+
+/* ===== Landing page global polish ===== */
+.landing-page section {
+  padding: 96px 0;
+  scroll-margin-top: 88px;
+}
+
+.landing-page section:first-of-type {
+  padding-top: 120px;
+}
+
+/* Subtle divider between sections (home, about us, fleet, blog, contact, faq) */
+.landing-page > section:not(:first-child) {
+  border-top: 1px solid rgba(15, 23, 42, 0.06);
+}
+.public-page > section {
+  border-top: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.landing-page .section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(15, 23, 42, 0.08) 20%, rgba(15, 23, 42, 0.08) 80%, transparent 100%);
+  margin: 32px auto;
+  max-width: 1080px;
+}
+
+.landing-page .navbar-modern {
+  background: rgba(255, 255, 255, 0.82) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.landing-page .navbar-modern.navbar-scrolled {
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+}
+
+.landing-page .hero-cta-primary {
+  background: var(--brand-gradient) !important;
+  color: #fff !important;
+  border-radius: 14px !important;
+  box-shadow: var(--brand-glow) !important;
+}
+
+.landing-page .hero-cta-primary:hover {
+  background: var(--brand-gradient-hover) !important;
+}
+
+.landing-page .hero-cta-contact {
+  color: var(--role-primary, #1e3a5f) !important;
+}
+
+.app-footer a:hover {
+  color: var(--sky-600) !important;
+}
+
+/* Landing Swiper styling */
+.landing-page .swiper {
+  padding-bottom: 36px;
+}
+
+.landing-page .swiper-slide {
+  height: auto;
+  display: flex;
+}
+
+.landing-page .swiper-pagination-bullet {
+  background: rgba(30, 58, 95, 0.25);
+  opacity: 1;
+}
+
+.landing-page .swiper-pagination-bullet-active {
+  background: var(--role-primary, #1e3a5f);
+}
+
+.landing-page .featured-grid.swiper {
+  padding-top: 12px;
+}
+
+.landing-page .testimonials-grid.swiper {
+  padding-top: 12px;
+}
+
+.landing-page .hero-parallax {
+  position: relative;
+}
+
+.landing-page .hero-parallax-layer {
+  position: relative;
+}
+
+/* Landing section typography polish */
+.landing-page .section-title,
+.landing-page .featured-title,
+.landing-page .testimonials-title {
+  letter-spacing: -0.02em;
+}
+
+.landing-page .section-subtitle,
+.landing-page .featured-subtitle,
+.landing-page .testimonials-subtitle {
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ===== Mobile refinements: Landing ===== */
+@media (max-width: 959px) {
+  .landing-page section {
+    padding: 72px 0;
+  }
+
+  .landing-page section:first-of-type {
+    padding-top: 96px;
+  }
+
+  .landing-page .navbar-modern {
+    height: 56px;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(255, 255, 255, 0.98) !important;
+    transform: translateZ(0);
+  }
+
+  .landing-page .nav-cta {
+    gap: 8px;
+  }
+
+  .landing-page .nav-cta .v-btn {
+    min-height: 40px;
+    padding: 0 12px;
+    font-size: var(--text-sm);
+  }
+
+  .landing-page .hero-container {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .landing-page .hero-content-col,
+  .landing-page .hero-image-col {
+    width: 100%;
+  }
+
+  .landing-page .hero-title {
+    font-size: 2.1rem;
+    line-height: 1.2;
+  }
+
+  .landing-page .hero-tagline {
+    font-size: 1rem;
+  }
+
+  .landing-page .hero-tags {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .landing-page .hero-cta-group {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .landing-page .hero-cta-group .hero-cta {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .landing-page .hero-contact-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .landing-page .hero-contact-divider {
+    display: none;
+  }
+
+  .landing-page .promo-strip {
+    padding: 10px 0;
+  }
+
+  .landing-page .promo-strip-item {
+    font-size: 0.85rem;
+  }
+
+  .landing-page .featured-grid.swiper,
+  .landing-page .testimonials-grid.swiper {
+    padding-bottom: 28px;
+  }
+
+  .landing-page .footer-cta-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .landing-page .footer-top {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .landing-page .footer-map-wrap {
+    width: 100%;
+  }
+}
+
+@media (max-width: 599px) {
+  .landing-page .navbar-modern {
+    height: 52px;
+  }
+
+  .landing-page .hero-title {
+    font-size: 1.8rem;
+  }
+
+  .landing-page .hero-logo-img {
+    height: 36px;
+  }
+
+  .landing-page .promo-strip {
+    padding: 8px 0;
+  }
+
+  .landing-page .footer-cta-title {
+    font-size: 1.25rem;
+  }
+}
+
+/* Choices.js filters */
+.vehicle-filters-bar .choices {
+  min-width: 170px;
+  max-width: 220px;
+}
+
+.vehicle-filters-bar .choices__inner {
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+  min-height: 40px;
+  padding: 6px 12px;
+  background: #fff;
+}
+
+.vehicle-filters-bar .choices__list--single {
+  padding: 0;
+}
+
+.vehicle-filters-bar .choices__list--dropdown {
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+}
+
+.choices-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.choices-label {
+  font-size: 0.75rem;
+  color: rgba(15, 23, 42, 0.72);
+  font-weight: 600;
+}
+
+/* ===== Dashboard interaction polish ===== */
+.v-list-item {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.v-list-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
+}
+
+[data-reveal] {
+  will-change: transform, opacity;
+}
+
+/* ===== Mobile refinements: Dashboards ===== */
+@media (max-width: 959px) {
+  .page-header--with-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .page-header--glass {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .page-title,
+  h1.page-title {
+    font-size: var(--text-xl) !important;
+  }
+
+  .page-subtitle {
+    font-size: var(--text-body) !important;
+  }
+
+  .page-back {
+    width: 100%;
+  }
+
+  .vehicle-listings-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .vehicle-listings-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .vehicle-listings-toolbar .toolbar-right {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .vehicle-filters-bar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .vehicle-filters-bar .filter-field,
+  .vehicle-filters-bar .choices-filter,
+  .vehicle-filters-bar .filter-price {
+    width: 100%;
+  }
+
+  .hpa-data-table,
+  .v-data-table {
+    overflow-x: auto;
+  }
+
+  .hpa-data-table table,
+  .v-data-table__wrapper table {
+    min-width: 640px;
+  }
+
+  .payments-list-item .v-list-item__append {
+    margin-left: 0 !important;
+  }
+}
+
+@media (max-width: 599px) {
+  .vehicle-filters-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .vehicle-listing-card__actions {
+    flex-wrap: wrap;
+  }
+
+  .v-data-table__wrapper table {
+    min-width: 560px;
+  }
+}

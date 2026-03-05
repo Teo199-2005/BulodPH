@@ -1,0 +1,98 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90mC:/Users/Cocotantan/Downloads/PROJECT POVERTY/bulodph-frontend[39m
+
+ [32m✓[39m src/utils/inputFormatters.spec.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/utils/inputValidation.spec.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 38[2mms[22m[39m
+ [31m❯[39m src/composables/usePasswordValidation.spec.ts [2m([22m[2m6 tests[22m[2m | [22m[31m4 failed[39m[2m)[22m[32m 26[2mms[22m[39m
+     [32m✓[39m validates a strong password[32m 5[2mms[22m[39m
+[31m     [31m×[31m detects missing length[39m[32m 11[2mms[22m[39m
+[31m     [31m×[31m detects missing uppercase[39m[32m 3[2mms[22m[39m
+[31m     [31m×[31m detects missing digit[39m[32m 2[2mms[22m[39m
+[31m     [31m×[31m detects missing special character[39m[32m 1[2mms[22m[39m
+     [32m✓[39m handles empty password[32m 1[2mms[22m[39m
+ [32m✓[39m src/stores/userSession.spec.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 4 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/composables/usePasswordValidation.spec.ts[2m > [22musePasswordValidation[2m > [22mdetects missing length
+[31m[1mAssertionError[22m: expected undefined to be false // Object.is equality[39m
+
+[32m- Expected:[39m 
+false
+
+[31m+ Received:[39m 
+undefined
+
+[36m [2m❯[22m src/composables/usePasswordValidation.spec.ts:[2m21:63[22m[39m
+    [90m 19| [39m        [34mexpect[39m(isValid[33m.[39mvalue)[33m.[39m[34mtoBe[39m([35mfalse[39m)
+    [90m 20| [39m        [34mexpect[39m(strengthPercent[33m.[39mvalue)[33m.[39m[34mtoBe[39m([34m75[39m) [90m// 3 out of 4 rules met[39m
+    [90m 21| [39m        expect(rules.value.find(r => r.id === 'length')?.met).toBe(fal…
+    [90m   | [39m                                                              [31m^[39m
+    [90m 22| [39m    })
+    [90m 23| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/composables/usePasswordValidation.spec.ts[2m > [22musePasswordValidation[2m > [22mdetects missing uppercase
+[31m[1mAssertionError[22m: expected undefined to be false // Object.is equality[39m
+
+[32m- Expected:[39m 
+false
+
+[31m+ Received:[39m 
+undefined
+
+[36m [2m❯[22m src/composables/usePasswordValidation.spec.ts:[2m29:66[22m[39m
+    [90m 27| [39m
+    [90m 28| [39m        [34mexpect[39m(isValid[33m.[39mvalue)[33m.[39m[34mtoBe[39m([35mfalse[39m)
+    [90m 29| [39m        expect(rules.value.find(r => r.id === 'uppercase')?.met).toBe(…
+    [90m   | [39m                                                                 [31m^[39m
+    [90m 30| [39m    })
+    [90m 31| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/composables/usePasswordValidation.spec.ts[2m > [22musePasswordValidation[2m > [22mdetects missing digit
+[31m[1mAssertionError[22m: expected undefined to be false // Object.is equality[39m
+
+[32m- Expected:[39m 
+false
+
+[31m+ Received:[39m 
+undefined
+
+[36m [2m❯[22m src/composables/usePasswordValidation.spec.ts:[2m37:62[22m[39m
+    [90m 35| [39m
+    [90m 36| [39m        [34mexpect[39m(isValid[33m.[39mvalue)[33m.[39m[34mtoBe[39m([35mfalse[39m)
+    [90m 37| [39m        expect(rules.value.find(r => r.id === 'digit')?.met).toBe(fals…
+    [90m   | [39m                                                             [31m^[39m
+    [90m 38| [39m    })
+    [90m 39| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/composables/usePasswordValidation.spec.ts[2m > [22musePasswordValidation[2m > [22mdetects missing special character
+[31m[1mAssertionError[22m: expected undefined to be false // Object.is equality[39m
+
+[32m- Expected:[39m 
+false
+
+[31m+ Received:[39m 
+undefined
+
+[36m [2m❯[22m src/composables/usePasswordValidation.spec.ts:[2m45:64[22m[39m
+    [90m 43| [39m
+    [90m 44| [39m        [34mexpect[39m(isValid[33m.[39mvalue)[33m.[39m[34mtoBe[39m([35mfalse[39m)
+    [90m 45| [39m        expect(rules.value.find(r => r.id === 'special')?.met).toBe(fa…
+    [90m   | [39m                                                               [31m^[39m
+    [90m 46| [39m    })
+    [90m 47| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m3 passed[39m[22m[90m (4)[39m
+[2m      Tests [22m [1m[31m4 failed[39m[22m[2m | [22m[1m[32m22 passed[39m[22m[90m (26)[39m
+[2m   Start at [22m 12:27:23
+[2m   Duration [22m 2.56s[2m (transform 384ms, setup 664ms, import 736ms, tests 82ms, environment 6.24s)[22m
+

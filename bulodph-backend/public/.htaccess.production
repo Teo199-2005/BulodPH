@@ -1,0 +1,28 @@
+# Production: Vue frontend at /, Laravel API at /api
+# Place this in public_html and rename to .htaccess (or merge with existing)
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    # Prefer index.html for / so Vue loads; Laravel (index.php) only for /api
+    DirectoryIndex index.html index.php
+
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # API: send /api and /api/* to Laravel (index.php)
+    RewriteCond %{REQUEST_URI} ^/api
+    RewriteRule ^ index.php [L]
+
+    # Existing file or directory: serve directly
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # SPA: everything else → Vue app (index.html)
+    RewriteRule ^ index.html [L]
+</IfModule>
